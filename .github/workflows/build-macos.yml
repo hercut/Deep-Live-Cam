@@ -1,4 +1,4 @@
-name: Build macOS App
+name: Build macOS App for Silicon (M1/M2)
 
 on:
   push:
@@ -17,9 +17,9 @@ jobs:
       - name: 📥 Cloner le dépôt
         uses: actions/checkout@v4
 
-      - name: 🛠️ Installer Python 3.11
+      - name: 🛠️ Installer Python 3.10
         run: |
-          brew install python@3.10  # Installe Python 3.11
+          brew install python@3.10  # Installe Python 3.10
           python3 -m venv venv  # Crée un environnement virtuel
           source venv/bin/activate  # Active l'environnement virtuel
 
@@ -34,14 +34,15 @@ jobs:
           pip install -r requirements.txt  # Installe les dépendances
           pip install pyinstaller  # Installe PyInstaller
 
-      - name: 🚀 Compiler l’application
+      - name: 🚀 Compiler l’application pour Mac Silicon
         run: |
           source venv/bin/activate  # Active l'environnement virtuel
-          pyinstaller --onefile --windowed deep_live_cam.py
+          # Force la compilation pour l'architecture ARM (Mac Silicon)
+          pyinstaller --onefile --windowed --target-arch arm64 deep_live_cam.py
 
       - name: 📤 Uploader l’application compilée
         uses: actions/upload-artifact@v4
         with:
-          name: DeepLiveCam-macOS
+          name: DeepLiveCam-macOS-Silicon
           path: build_artifacts/
           retention-days: 7
