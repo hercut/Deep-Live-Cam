@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: 📥 Cloner le dépôt
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🛠️ Installer les dépendances
         run: |
@@ -30,7 +30,8 @@ jobs:
           mv dist/deep_live_cam build_artifacts/
 
       - name: 📤 Uploader l’application compilée
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DeepLiveCam-macOS
           path: build_artifacts/
+          retention-days: 7  # Conserve l'artifact pendant 7 jours
