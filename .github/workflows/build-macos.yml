@@ -22,16 +22,22 @@ jobs:
           brew install python3 opencv ffmpeg
           pip3 install -r requirements.txt
           pip3 install pyinstaller
+          
+      - name: 🔍 Afficher les fichiers pour debug
+        run: |
+          ls -la  # Affiche les fichiers du répertoire courant pour vérifier la présence de deep_live_cam.py
 
       - name: 🚀 Compiler l’application
         run: |
           pyinstaller --onefile --windowed deep_live_cam.py
-          mkdir -p build_artifacts
-          mv dist/deep_live_cam build_artifacts/
+          
+      - name: 🔍 Vérifier la sortie PyInstaller
+        run: |
+          ls -la dist/  # Vérifie le contenu du dossier dist pour s'assurer que l'application a bien été compilée
 
       - name: 📤 Uploader l’application compilée
         uses: actions/upload-artifact@v4
         with:
           name: DeepLiveCam-macOS
           path: build_artifacts/
-          retention-days: 7  # Conserve l'artifact pendant 7 jours
+          retention-days: 7
