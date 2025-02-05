@@ -17,8 +17,9 @@ jobs:
       - name: 📥 Cloner le dépôt
         uses: actions/checkout@v4
 
-      - name: 🛠️ Créer et activer un environnement virtuel
+      - name: 🛠️ Installer Python 3.10
         run: |
+          brew install python@3.10  # Installe Python 3.10
           python3 -m venv venv  # Crée un environnement virtuel
           source venv/bin/activate  # Active l'environnement virtuel
 
@@ -28,26 +29,10 @@ jobs:
           pip install -r requirements.txt  # Installe les dépendances
           pip install pyinstaller  # Installe PyInstaller
 
-      - name: 🔍 Afficher la version de Python
-        run: |
-          python --version  # Vérifie la version de Python utilisée
-
-      - name: 🔍 Afficher les paquets installés
-        run: |
-          pip freeze  # Vérifie les paquets installés dans l'environnement virtuel
-
-      - name: 🔍 Vérifier la présence du fichier deep_live_cam.py
-        run: |
-          ls -la  # Vérifie si le fichier 'deep_live_cam.py' est bien présent dans le répertoire
-
       - name: 🚀 Compiler l’application
         run: |
           source venv/bin/activate  # Active l'environnement virtuel
           pyinstaller --onefile --windowed deep_live_cam.py
-
-      - name: 🔍 Vérifier la sortie de PyInstaller
-        run: |
-          ls -la dist/  # Vérifie le contenu du dossier 'dist' après la compilation
 
       - name: 📤 Uploader l’application compilée
         uses: actions/upload-artifact@v4
