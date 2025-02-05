@@ -17,11 +17,16 @@ jobs:
       - name: 📥 Cloner le dépôt
         uses: actions/checkout@v4
 
-      - name: 🛠️ Installer Python 3.10
+      - name: 🛠️ Installer Python 3.11
         run: |
-          brew install python@3.10  # Installe Python 3.10
+          brew install python@3.10  # Installe Python 3.11
           python3 -m venv venv  # Crée un environnement virtuel
           source venv/bin/activate  # Active l'environnement virtuel
+
+      - name: 🧰 Mettre à jour pip
+        run: |
+          source venv/bin/activate  # Active l'environnement virtuel
+          pip install --upgrade pip  # Met à jour pip à la dernière version
 
       - name: 🛠️ Installer les dépendances
         run: |
